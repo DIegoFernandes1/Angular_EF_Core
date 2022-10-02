@@ -1,10 +1,14 @@
-﻿namespace ProEventos.Api.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+
+namespace ProEventos.Api.Models
 {
     public class Evento
     {
-        public int EventoId { get; set; }
+        [Key]
+        public int IdEvento { get; set; }
         public string Local { get; set; }
-        public string DataEvento { get; set; }
+        public DateTime DataEvento { get; set; }
         public string Tema { get; set; }
         public int QuantidadePessoas { get; set; }
         public string Lote { get; set; }
