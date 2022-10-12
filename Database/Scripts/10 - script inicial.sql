@@ -16,7 +16,7 @@ begin
 end
 
 
---insert into Evento values ('Campinas-SP', GETDATE()+2, 'Angular Workshop', 350, '1° Lote', null);
---insert into Evento values ('São Paulo-SP', GETDATE()+30, 'Cafe e bate papo', 500, '2° Lote', null);
---insert into Evento values ('Campinas-SP', GETDATE()+15, '.Net Workshop', 500, '8° Lote', null);
+--insert into Evento values ('Campinas-SP', GETDATE()+2, 'Angular Workshop', 350, '1° Lote', 'evento1.jfif');
+--insert into Evento values ('São Paulo-SP', GETDATE()+30, 'Cafe e bate papo', 500, '2° Lote', 'evento2.jpg');
+--insert into Evento values ('Campinas-SP', GETDATE()+15, '.Net Workshop', 500, '8° Lote', 'evento3.png');
 
