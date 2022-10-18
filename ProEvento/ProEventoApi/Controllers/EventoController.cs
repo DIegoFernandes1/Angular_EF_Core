@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProEventos.Api.Data;
-using ProEventos.Api.Models;
+using ProEventos.Application.Services;
+using ProEventos.Domain.Models;
+using ProEventos.Persistence.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,22 +13,23 @@ namespace ProEvento.Api.Controllers
     [ApiController]
     public class EventoController : ControllerBase
     {
-        private readonly DataContext _context;
-        public EventoController(DataContext dataContext) 
+        private EventoService _eventoService;
+
+        public EventoController(EventoService eventoService)
         {
-            _context = dataContext;
+            _eventoService = eventoService;
         }
 
         [HttpGet]
         public IEnumerable<Evento> Get()
         {
-           return _context.Evento;
+            return _eventoService.Get();
         }
 
         [HttpGet("{id}")]
         public Evento Get(int id)
         {
-            return _context.Evento.FirstOrDefault(x => x.IdEvento == id);
+            return _eventoService.Get(id);
         }
 
     }
