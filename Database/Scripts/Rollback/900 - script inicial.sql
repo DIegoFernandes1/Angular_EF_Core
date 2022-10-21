@@ -1,3 +1,4 @@
+use ProEvento
 drop table RedeSocial
 drop table PalestranteEvento
 drop table Palestrante

@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using ProEventos.Application.Services;
+using ProEventos.Application.Concreta;
+using ProEventos.Application.Interface;
+using ProEventos.Persistence.Concreta;
 using ProEventos.Persistence.Data;
+using ProEventos.Persistence.Interface;
 
 namespace ProEventoApi
 {
@@ -15,13 +18,16 @@ namespace ProEventoApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddCors();
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddScoped<EventoService>();
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IEventoPersistence, EventoPersistence>();
+            services.AddScoped<IGeralPersistence, GeralPersistence>();
             services.AddScoped<ProEventosContext>();
         }
 

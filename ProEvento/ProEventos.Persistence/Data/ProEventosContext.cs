@@ -25,10 +25,22 @@ namespace ProEventos.Persistence.Data
         public DbSet<RedeSocial> redeSocial { get; set; }
         public DbSet<PalestranteEvento> palestranteEvento { get; set; }
 
-        protected void onModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PalestranteEvento>()
-                .HasKey(PE => new { PE.IdEvento, PE.IdPalestrante });
+           modelBuilder.Entity<Evento>()
+                .HasMany(e => e.RedeSocial)
+                .WithOne(rs => rs.Evento)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Evento>()
+               .HasMany(l => l.Lote)
+               .WithOne(e => e.Evento)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Palestrante>()
+                .HasMany(e => e.RedeSocials)
+                .WithOne(rs => rs.Palestrante)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
