@@ -13,6 +13,7 @@
     <tr>
       <th>
         <button type="button" class="btn btn-outline-light btn-sm" (click)="MostrarImagem = !MostrarImagem">
+          <i class="{{MostrarImagem ? 'fa fa-eye' : 'fa fa-eye-slash'}}"></i>
           {{MostrarImagem ? 'exibir' : 'ocultar'}}
         </button>
       </th>
@@ -33,15 +34,19 @@
         class="imagemURL"
         src='/assets/imagens/{{evento.imagemURL}}'>
       </td>
-      <td>{{evento.idEvento}}</td>
+      <td>{{evento.id}}</td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento | date: 'dd/MM/yyyy'}}</td>
+      <td>{{evento.dataEvento | DateTimePipe}}</td>
       <td>{{evento.quantidadePessoas}}</td>
-      <td>{{evento.lote}}</td>
+      <td>{{evento.lote[0].nome}}</td>
       <td>
-        <button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
-        <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+        <button type="button" class="btn btn-primary btn-sm mr-2" tooltip="Editar">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" tooltip="Excluir" (click)="openModal(template)">
+          <i class="fa fa-trash"></i>
+        </button>
       </td>
     </tr>
   </tbody>
@@ -53,3 +58,11 @@
     </tr>
   </tfoot>
 </table>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que deseja excluir esse evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="confirm()" >Não</button>
+  </div>
+</ng-template>
