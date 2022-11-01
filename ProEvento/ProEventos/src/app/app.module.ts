@@ -6,21 +6,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './Eventos/Eventos.component';
-import { PalestrantesComponent } from './Palestrantes/Palestrantes.component';
+import { EventosComponent } from './components/Eventos/Eventos.component';
+import { PalestrantesComponent } from './components/Palestrantes/Palestrantes.component';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { TituloComponent } from './shared/titulo/titulo.component';
 
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 
-import { NavComponent } from './nav/nav.component';
+import { NavComponent } from './shared/nav/nav.component';
 
 import { EventoService } from './services/evento.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+
 
 
 
@@ -29,8 +34,12 @@ import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
     AppComponent,
       EventosComponent,
       PalestrantesComponent,
+      ContatosComponent,
+      DashboardComponent,
+      PerfilComponent,
       NavComponent,
-      DateTimeFormatPipe
+      DateTimeFormatPipe,
+      TituloComponent
    ],
   imports: [
     BrowserModule,
