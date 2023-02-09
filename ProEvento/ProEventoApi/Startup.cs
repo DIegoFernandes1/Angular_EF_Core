@@ -9,6 +9,7 @@ using ProEventos.Application.Interface;
 using ProEventos.Persistence.Concreta;
 using ProEventos.Persistence.Data;
 using ProEventos.Persistence.Interface;
+using System;
 
 namespace ProEventoApi
 {
@@ -20,10 +21,14 @@ namespace ProEventoApi
         {
             services.AddControllers()
                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddCors();
+
             services.AddSwaggerGen(c => {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IEventoPersistence, EventoPersistence>();
