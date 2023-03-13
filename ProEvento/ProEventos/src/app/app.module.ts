@@ -25,8 +25,11 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxCurrencyModule } from "ngx-currency";
 
 import { EventoService } from './services/evento.service';
+import { LoteService } from './services/Lote.service';
+
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
 import { UserComponent } from './components/user/user.component';
 import { LoginComponent } from './components/user/login/login.component';
@@ -58,6 +61,7 @@ defineLocale('pt-br', ptBrLocale);
     BrowserAnimationsModule,
     CollapseModule.forRoot(),
     TooltipModule.forRoot(),
+    NgxCurrencyModule,
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
@@ -71,7 +75,10 @@ defineLocale('pt-br', ptBrLocale);
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
   ],
-  providers: [EventoService],
+  providers: [
+    EventoService,
+    LoteService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

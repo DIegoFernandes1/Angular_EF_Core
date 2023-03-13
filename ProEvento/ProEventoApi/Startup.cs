@@ -30,10 +30,15 @@ namespace ProEventoApi
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IEventoService, EventoService>();
-            services.AddScoped<IEventoPersistence, EventoPersistence>();
-            services.AddScoped<IGeralPersistence, GeralPersistence>();
-            services.AddScoped<ProEventosContext>();
+            services.AddTransient<ProEventosContext>();
+
+            services.AddTransient<IGeralPersistence, GeralPersistence>();
+            services.AddTransient<IEventoPersistence, EventoPersistence>();
+            services.AddTransient<IPalestrantesPersistence, PalestrantePersistence>();
+            services.AddTransient<ILotePersistence, LotePersistence>();
+           
+            services.AddTransient<IEventoService, EventoService>();
+            services.AddTransient<ILoteService, LoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

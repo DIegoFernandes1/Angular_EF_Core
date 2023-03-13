@@ -1,5 +1,4 @@
-﻿using ProEventos.Domain.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Interface
 {

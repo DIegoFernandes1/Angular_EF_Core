@@ -5,7 +5,7 @@ export interface Lote {
   nome: string;
   preco: number;
   dataInicio?: Date;
-  dataim: Date;
+  dataFim: Date;
   quantidade: number;
   idEvento?: number;
   evento: Evento;

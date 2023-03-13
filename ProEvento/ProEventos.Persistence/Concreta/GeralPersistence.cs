@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProEventos.Domain.Models;
-using ProEventos.Persistence.Data;
+﻿using ProEventos.Persistence.Data;
 using ProEventos.Persistence.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Concreta
