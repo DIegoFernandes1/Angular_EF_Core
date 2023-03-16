@@ -43,7 +43,7 @@
           <img [collapse]="MostrarImagem"
           [isAnimated]="true"
           class="imagemURL"
-          src='/assets/imagens/{{evento.imagemURL}}'>
+          [src]="ListarImagem(evento.imagemURL)">
         </td>
         <td>{{evento.id}}</td>
         <td>{{evento.tema}}</td>
