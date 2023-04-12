@@ -1,4 +1,5 @@
-﻿using ProEventos.Persistence.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ProEventos.Persistence.Data;
 using ProEventos.Persistence.Interface;
 using System.Threading.Tasks;
 

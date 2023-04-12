@@ -4,9 +4,11 @@ using ProEventos.Application.Interface;
 using System.Threading.Tasks;
 using System;
 using ProEventos.Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProEventos.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoteController : ControllerBase

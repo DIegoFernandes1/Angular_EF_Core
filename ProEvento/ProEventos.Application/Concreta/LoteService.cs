@@ -12,13 +12,11 @@ namespace ProEventos.Application.Concreta
 {
     public class LoteService : ILoteService
     {
-        private readonly IGeralPersistence geralPersistence;
         private readonly ILotePersistence lotePersistence;
         private readonly IMapper mapper;
 
-        public LoteService(IGeralPersistence geralPersistence, ILotePersistence lotePersistence, IMapper mapper)
+        public LoteService(ILotePersistence lotePersistence, IMapper mapper)
         {
-            this.geralPersistence = geralPersistence;
             this.lotePersistence = lotePersistence;
             this.mapper = mapper;
         }
@@ -30,8 +28,8 @@ namespace ProEventos.Application.Concreta
                 var lote = mapper.Map<Lote>(loteDTO);
                 lote.IdEvento = idEvento;
 
-                geralPersistence.Add(lote);
-                await geralPersistence.SaveChangesAsync();
+                lotePersistence.Add(lote);
+                await lotePersistence.SaveChangesAsync();
 
                 return mapper.Map<LoteDTO>(lote);
             }
@@ -52,8 +50,8 @@ namespace ProEventos.Application.Concreta
                 loteDTO.IdEvento = idEvento;
 
                 mapper.Map(loteDTO, lote);
-                geralPersistence.Update(lote);
-                await geralPersistence.SaveChangesAsync();
+                lotePersistence.Update(lote);
+                await lotePersistence.SaveChangesAsync();
 
                 return mapper.Map<LoteDTO>(lote);
             }
@@ -96,8 +94,8 @@ namespace ProEventos.Application.Concreta
                 var lote = await lotePersistence.GetLoteByIdsAsync(idEvento, idLote);
                 DomainException.When(lote == null, "Lote para delete não encontrado.");
 
-                geralPersistence.Delete(lote);
-                return await geralPersistence.SaveChangesAsync();
+                lotePersistence.Delete(lote);
+                return await lotePersistence.SaveChangesAsync();
             }
             catch (Exception ex)
             {

@@ -1,5 +1,4 @@
 ﻿using ProEventos.Application.DTOs;
-using ProEventos.Domain.Models;
 using System.Threading.Tasks;
 
 namespace ProEventos.Application.Interface

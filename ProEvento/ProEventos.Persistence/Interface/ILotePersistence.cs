@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Interface
 {
-    public interface ILotePersistence
+    public interface ILotePersistence : IGeralPersistence
     {
         /// <summary>
         /// metodo get que retornará uma lista de lotes por id evento

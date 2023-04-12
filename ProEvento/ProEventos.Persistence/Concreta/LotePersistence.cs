@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Concreta
 {
-    public class LotePersistence : ILotePersistence
+    public class LotePersistence :  GeralPersistence, ILotePersistence
     {
         private readonly ProEventosContext proEventosContext;
 
-        public LotePersistence(ProEventosContext proEventosContext)
+        public LotePersistence(ProEventosContext proEventosContext) : base(proEventosContext)
         {
             this.proEventosContext = proEventosContext;
         }

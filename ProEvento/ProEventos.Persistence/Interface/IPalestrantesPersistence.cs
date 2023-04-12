@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Interface
 {
-    public interface IPalestrantesPersistence
+    public interface IPalestrantesPersistence : IGeralPersistence
     {
         //PALESTRANTES
         Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos);

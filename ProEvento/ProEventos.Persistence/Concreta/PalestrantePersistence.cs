@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Concreta
 {
-    public class PalestrantePersistence : IPalestrantesPersistence
+    public class PalestrantePersistence : GeralPersistence, IPalestrantesPersistence
     {
         private readonly ProEventosContext Context;
 
-        public PalestrantePersistence(ProEventosContext context)
+        public PalestrantePersistence(ProEventosContext context) : base (context)
         {
             Context = context;
         }
@@ -47,7 +47,8 @@ namespace ProEventos.Persistence.Concreta
             }
 
             query = query.AsNoTracking().OrderBy(p => p.Id).
-                    Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
+                    Where(p => p.User.Nome.ToLower().Contains(nome.ToLower()) 
+                    && p.User.Sobrenome.ToLower().Contains(nome.ToLower()));
 
 
             return await query.ToArrayAsync();
