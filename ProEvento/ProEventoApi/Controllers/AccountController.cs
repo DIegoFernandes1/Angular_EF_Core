@@ -39,7 +39,8 @@ namespace ProEventos.Api.Controllers
                 if (!result.Succeeded)
                     return Unauthorized("Usuário ou Senha está inválido");
 
-                return Ok(new { 
+                return Ok(new
+                {
                     userName = user.Username,
                     nome = user.Nome,
                     token = tokenService.CreateToken(user).Result
@@ -76,9 +77,14 @@ namespace ProEventos.Api.Controllers
                     return BadRequest("Usuário já existe");
 
                 var user = await accountService.CreateAccountAsync(userDTO);
-                
+
                 if (user != null)
-                    return Ok(user);
+                    return Ok(new
+                    {
+                        userName = user.Username,
+                        nome = user.Nome,
+                        token = tokenService.CreateToken(user).Result
+                    });
 
                 return BadRequest("Erro ao tentar cadastrar usuário");
 

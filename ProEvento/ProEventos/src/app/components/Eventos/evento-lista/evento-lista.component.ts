@@ -39,7 +39,7 @@ export class EventoListaComponent implements OnInit {
       console.log(`${environment.apiURL+environment.resourcesAPI}/${imagemURL}}`);
 
       return (imagemURL !== '' && imagemURL !== null)
-      ? `${environment.apiURL}${environment.resourcesAPI}${imagemURL}`
+      ? `${environment.ApiURLResources}${environment.resourcesAPI}${imagemURL}`
       : 'assets/imagens/sem-foto.jpg';
 
     }

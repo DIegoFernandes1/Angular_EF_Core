@@ -22,7 +22,7 @@ import { environment } from '@environments/environment';
 export class EventoDetalheComponent implements OnInit {
 
   form!: FormGroup;
-  evento!: Evento;
+  evento = {} as Evento;
   estadoSalvar = 'post';
   idEvento: any;
   modalRef!: BsModalRef;
@@ -87,7 +87,7 @@ export class EventoDetalheComponent implements OnInit {
 
           if(this.evento.imagemURL !== '')
           {
-            this.imagemURL = environment.apiURL + environment.resourcesAPI + this.evento.imagemURL;
+            this.imagemURL = environment.ApiURLResources + environment.resourcesAPI + this.evento.imagemURL;
           }
           // duas formas de carregar os lotes
           //1° forma mais simplificada

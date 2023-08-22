@@ -42,7 +42,7 @@ namespace ProEventos.Application.Concreta
             }
         }
 
-        public async Task<UserDTO> CreateAccountAsync(UserDTO userDTO)
+        public async Task<UserUpdateDTO> CreateAccountAsync(UserDTO userDTO)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace ProEventos.Application.Concreta
 
                 if (result.Succeeded)
                 {
-                    return mapper.Map<UserDTO>(user);
+                    return mapper.Map<UserUpdateDTO>(user);
                 }
 
                 return null;

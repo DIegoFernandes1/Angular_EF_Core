@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ export class EventoService {
 
 constructor(private httpClient: HttpClient) { }
 
-private BASE_URL = environment.apiURL + "api/evento";
+private BASE_URL = environment.apiURL + "evento";
 
   public getAllEventos(): Observable<Evento[]>{
     return this.httpClient

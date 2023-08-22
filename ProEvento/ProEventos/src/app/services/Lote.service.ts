@@ -12,7 +12,7 @@ export class LoteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private BASE_URL = environment.apiURL + "api/lote";
+  private BASE_URL = environment.apiURL + "lote";
 
     public getLotesByIdEventoAsync(idEvento: Number): Observable<Lote[]>{
       return this.httpClient
