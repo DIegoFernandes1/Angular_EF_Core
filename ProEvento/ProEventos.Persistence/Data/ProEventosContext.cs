@@ -22,6 +22,7 @@ namespace ProEventos.Persistence.Data
         {
             // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("ProEventoDatabase"));
+            options.EnableSensitiveDataLogging(true);
         }
 
         public DbSet<Evento> Evento { get; set; }

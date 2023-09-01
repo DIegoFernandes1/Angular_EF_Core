@@ -118,7 +118,6 @@ namespace ProEventoApi
             services.AddTransient<ILotePersistence, LotePersistence>();
             services.AddTransient<IUserPersistence, UserPersistence>();
 
-
             services.AddTransient<IEventoService, EventoService>();
             services.AddTransient<ILoteService, LoteService>();
             services.AddTransient<ITokenService, TokenService>();

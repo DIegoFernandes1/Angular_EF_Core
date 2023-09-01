@@ -17,8 +17,8 @@ namespace ProEventos.Application.Concreta
         private readonly IMapper mapper;
         private readonly IUserPersistence userPersistence;
 
-        public AccountService(UserManager<User> userManager, 
-                              SignInManager<User> signInManager, 
+        public AccountService(UserManager<User> userManager,
+                              SignInManager<User> signInManager,
                               IMapper mapper,
                               IUserPersistence userPersistence)
         {
@@ -62,7 +62,7 @@ namespace ProEventos.Application.Concreta
             }
         }
 
-        public async  Task<UserUpdateDTO> GetUserByUsernameAsync(string username)
+        public async Task<UserUpdateDTO> GetUserByUsernameAsync(string username)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace ProEventos.Application.Concreta
             {
                 var user = await userPersistence.GetUserByUsernameAsync(userUpdateDTO.Username);
 
-                if(user == null) 
+                if (user == null)
                     return null;
 
                 userUpdateDTO.Id = user.Id;
@@ -102,9 +102,9 @@ namespace ProEventos.Application.Concreta
 
                 userPersistence.Update(user);
 
-                if(await userPersistence.SaveChangesAsync())
+                if (await userPersistence.SaveChangesAsync())
                     return mapper.Map<UserUpdateDTO>(await userPersistence.GetUserByUsernameAsync(user.UserName));
-                
+
 
                 return null;
             }

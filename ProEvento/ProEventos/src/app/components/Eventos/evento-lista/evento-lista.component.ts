@@ -35,9 +35,6 @@ export class EventoListaComponent implements OnInit {
     }
 
     public ListarImagem(imagemURL: string): string{
-      console.log(imagemURL);
-      console.log(`${environment.apiURL+environment.resourcesAPI}/${imagemURL}}`);
-
       return (imagemURL !== '' && imagemURL !== null)
       ? `${environment.ApiURLResources}${environment.resourcesAPI}${imagemURL}`
       : 'assets/imagens/sem-foto.jpg';

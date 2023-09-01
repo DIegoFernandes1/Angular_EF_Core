@@ -22,8 +22,6 @@ export class JwtInterceptor implements HttpInterceptor {
       {
         currentUser = user
 
-        console.log(currentUser)
-
         if(currentUser){
           request = request.clone({
             setHeaders:{
