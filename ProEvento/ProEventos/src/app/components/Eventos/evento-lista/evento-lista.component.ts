@@ -6,6 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
+import { PaginatedResult, Pagination } from '@app/models/Pagination';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-evento-lista',
@@ -15,11 +18,12 @@ import { environment } from '@environments/environment';
 export class EventoListaComponent implements OnInit {
 
   public eventos: Evento[] = [];
-  public eventosFiltrados: Evento[] = [];
   public MostrarImagem = false;
-  private filtroListado = '';
   public idEvento = 0;
+  public pagination = {} as Pagination;
   modalRef?: BsModalRef;
+
+  termoBuscaChanged: Subject<string> = new Subject<string>();
 
   constructor(
     private eventoService: EventoService,
@@ -30,7 +34,8 @@ export class EventoListaComponent implements OnInit {
     ) { }
 
     public ngOnInit() {
-      this.spinner.show()
+      this.pagination = {currentPage: 1, itemsPerPage: 3, totalItems: 1} as Pagination;
+
       this.getAllEventos();
     }
 
@@ -42,71 +47,81 @@ export class EventoListaComponent implements OnInit {
     }
 
     public getAllEventos(): void{
-      this.eventoService.getAllEventos().subscribe(
+      this.spinner.show()
+
+      this.eventoService.getAllEventos(this.pagination.currentPage, this.pagination.itemsPerPage).subscribe(
+
+        (paginatedResult: PaginatedResult<Evento[]>) =>{
+          this.eventos = paginatedResult.result,
+          this.pagination = paginatedResult.pagination
+        },
+        (error: any) =>
         {
-          next: (_eventos: Evento[]) =>{
-            this.eventos = _eventos,
-            this.eventosFiltrados = this.eventos
-          },
-          error: (error: any) =>
-          {
-            this.spinner.hide();
-            this.ToastrService.error('Erro ao carregar os eventos', 'Erro');
-          },
-          complete: () => {
-            this.spinner.hide();
-            this.ToastrService.success('Eventos carregados com sucesso', 'Carregado');
-          }
+          console.error(error)
+          this.spinner.hide();
+          this.ToastrService.error('Erro ao carregar os eventos', 'Erro');
         }
-        );
+        ).add(() => this.spinner.hide());
       }
 
-      public get filtroLista(){
-        return this.filtroListado;
-      }
+      public filtrarEventos(event: any): void{
 
-      public set filtroLista(value: string){
-        this.filtroListado = value;
-        this.eventosFiltrados = this.filtroLista ? this.filtrarEventos(this.filtroLista): this.eventos;
-      }
+        if(this.termoBuscaChanged.observers.length === 0){
 
-      public filtrarEventos(filtrarPor: string): Evento[]{
-        filtrarPor = filtrarPor.toLocaleLowerCase();
-        return this.eventos.filter(
-          (evento: Evento) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-          || evento.local.toLocaleLowerCase().indexOf(filtrarPor) !== -1
-          );
-        }
-
-
-        public openModal(event: any, template: TemplateRef<any>, idEvento: number) {
-          event.stopPropagation();
-          this.idEvento = idEvento;
-          this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        }
-
-        public confirm(): void {
-          this.modalRef?.hide();
-          this.spinner.show();
-
-          this.eventoService.deleteEvento(this.idEvento).subscribe(
-            (result: string) => {
-              this.ToastrService.success('O evento foi excluido com sucesso!', 'Deletado!');
-              this.getAllEventos();
-            },
-            (error: any) => {
-              this.ToastrService.error(`Erro ao tentar deletar o evento ${this.idEvento}`, 'Erro!')
-              console.error(error);
+          this.termoBuscaChanged.pipe(debounceTime(1000)).subscribe(
+            filtarPor => {
+              this.spinner.show()
+              this.eventoService.getAllEventos(this.pagination.currentPage, this.pagination.itemsPerPage, filtarPor).subscribe(
+                (paginatedResult: PaginatedResult<Evento[]>) =>{
+                  this.eventos = paginatedResult.result,
+                  this.pagination = paginatedResult.pagination
+                },
+                (error: any) =>
+                {
+                  console.error(error)
+                  this.spinner.hide();
+                  this.ToastrService.error('Erro ao carregar os eventos', 'Erro');
+                }
+                ).add(() => this.spinner.hide());
+              });
             }
-          ).add(() => this.spinner.hide());
-        }
 
-        public decline(): void {
-          this.modalRef?.hide();
-        }
+            this.termoBuscaChanged.next(event.value)
+          }
 
-        public detalheEvento(id: number): void{
-          this.router.navigate([`eventos/detalhe/${id}`]);
-        }
 
-      }
+          public openModal(event: any, template: TemplateRef<any>, idEvento: number) {
+            event.stopPropagation();
+            this.idEvento = idEvento;
+            this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+          }
+
+          public confirm(): void {
+            this.modalRef?.hide();
+            this.spinner.show();
+
+            this.eventoService.deleteEvento(this.idEvento).subscribe(
+              (result: string) => {
+                this.ToastrService.success('O evento foi excluido com sucesso!', 'Deletado!');
+                this.getAllEventos();
+              },
+              (error: any) => {
+                this.ToastrService.error(`Erro ao tentar deletar o evento ${this.idEvento}`, 'Erro!')
+                console.error(error);
+              }
+              ).add(() => this.spinner.hide());
+            }
+
+            public decline(): void {
+              this.modalRef?.hide();
+            }
+
+            public detalheEvento(id: number): void{
+              this.router.navigate([`eventos/detalhe/${id}`]);
+            }
+
+            public pageChanged(event): void{
+              this.pagination.currentPage = event.page;
+              this.getAllEventos();
+            }
+          }

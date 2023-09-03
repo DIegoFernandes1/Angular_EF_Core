@@ -26,6 +26,7 @@ import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxCurrencyModule } from "ngx-currency";
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { EventoService } from './services/evento.service';
 import { LoteService } from './services/Lote.service';
@@ -81,6 +82,7 @@ defineLocale('pt-br', ptBrLocale);
       }),
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   providers: [
     EventoService,

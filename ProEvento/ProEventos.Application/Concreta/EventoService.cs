@@ -4,6 +4,7 @@ using ProEventos.Application.Helpers;
 using ProEventos.Application.Interface;
 using ProEventos.Domain.Models;
 using ProEventos.Persistence.Interface;
+using ProEventos.Persistence.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace ProEventos.Application.Concreta
         private readonly IMapper mapper;
 
         //GERAL
-        public EventoService(IEventoPersistence eventoPersistence, 
+        public EventoService(IEventoPersistence eventoPersistence,
                             IMapper mapper)
         {
             this.EventoPersistence = eventoPersistence;
@@ -33,7 +34,7 @@ namespace ProEventos.Application.Concreta
 
                 if (await EventoPersistence.SaveChangesAsync())
                 {
-                    var eventoDTO = await EventoPersistence.GetAllEventoByIdAsync(idUser,evento.Id);
+                    var eventoDTO = await EventoPersistence.GetAllEventoByIdAsync(idUser, evento.Id);
                     return mapper.Map<EventoDTO>(eventoDTO);
                 }
                 return null;
@@ -42,7 +43,7 @@ namespace ProEventos.Application.Concreta
             {
                 throw new Exception(ex.Message);
             }
-            
+
         }
 
         public async Task<EventoDTO> UpdateEvento(int idUser, int idEvento, EventoDTO model)
@@ -91,15 +92,20 @@ namespace ProEventos.Application.Concreta
 
 
         //EVENTOS
-        public async Task<EventoDTO[]> GetAllEventosAsync(int idUser, bool includePalestrantes = false)
+        public async Task<PageList<EventoDTO>> GetAllEventosAsync(int idUser, PageParams pageParams, bool includePalestrantes = false)
         {
             try
             {
-                var eventos = await EventoPersistence.GetAllEventosAsync(idUser, includePalestrantes);
+                var eventos = await EventoPersistence.GetAllEventosAsync(idUser, pageParams, includePalestrantes);
 
                 if (eventos == null) return null;
 
-                var eventosDTO = mapper.Map<EventoDTO[]>(eventos);
+                var eventosDTO = mapper.Map<PageList<EventoDTO>>(eventos);
+
+                eventosDTO.CurrentPage = eventos.CurrentPage;
+                eventosDTO.PageSize = eventos.PageSize;
+                eventosDTO.TotalCount = eventos.TotalCount;
+                eventosDTO.TotalPage = eventos.TotalPage;
 
                 return eventosDTO;
             }
@@ -119,23 +125,6 @@ namespace ProEventos.Application.Concreta
                 var eventoDTO = mapper.Map<EventoDTO>(evento);
 
                 return eventoDTO;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        public async Task<EventoDTO[]> GetAllEventosByTemaAsync(int idUser, string tema, bool includePalestrantes = false)
-        {
-            try
-            {
-                var eventos = await EventoPersistence.GetAllEventosByTemaAsync(idUser, tema, includePalestrantes);
-                if (eventos == null) return null;
-
-                var eventosDTO = mapper.Map<EventoDTO[]>(eventos);
-
-                return eventosDTO;
             }
             catch (Exception ex)
             {
