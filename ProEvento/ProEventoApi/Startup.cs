@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ProEventos.Application.Concreta;
+using ProEventos.Application.Helpers;
 using ProEventos.Application.Interface;
 using ProEventos.Domain.Identity;
 using ProEventos.Persistence.Concreta;
@@ -111,17 +112,22 @@ namespace ProEventoApi
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddTransient<ProEventosContext>();
+            services.AddTransient<IUtil, Util>();
 
             services.AddTransient<IGeralPersistence, GeralPersistence>();
             services.AddTransient<IEventoPersistence, EventoPersistence>();
             services.AddTransient<IPalestrantesPersistence, PalestrantePersistence>();
             services.AddTransient<ILotePersistence, LotePersistence>();
             services.AddTransient<IUserPersistence, UserPersistence>();
+            services.AddTransient<IPalestrantesPersistence, PalestrantePersistence>();
+            services.AddTransient<IRedeSocialPersistence, RedeSocialPersistence>();
 
             services.AddTransient<IEventoService, EventoService>();
             services.AddTransient<ILoteService, LoteService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IPalestranteService, PalestranteService>();
+            services.AddTransient<IRedeSocialService, RedeSocialService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

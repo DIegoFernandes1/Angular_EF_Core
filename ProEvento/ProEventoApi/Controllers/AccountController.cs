@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Api.Extensions;
 using ProEventos.Application.DTOs;
+using ProEventos.Application.Helpers;
 using ProEventos.Application.Interface;
 using System;
 using System.Threading.Tasks;
@@ -16,11 +17,15 @@ namespace ProEventos.Api.Controllers
     {
         private readonly IAccountService accountService;
         private readonly ITokenService tokenService;
+        private readonly IUtil util;
 
-        public AccountController(IAccountService accountService, ITokenService tokenService)
+        private readonly string destino = "Perfil";
+
+        public AccountController(IAccountService accountService, ITokenService tokenService, IUtil util)
         {
             this.accountService = accountService;
             this.tokenService = tokenService;
+            this.util = util;
         }
 
         [HttpPost("Login")]
@@ -124,6 +129,32 @@ namespace ProEventos.Api.Controllers
             catch (Exception ex)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar atualizar usuário. Erro: {ex.Message}");
+            }
+        }
+
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> UploadImage()
+        {
+            try
+            {
+                var user = await accountService.GetUserByUsernameAsync(User.GetUserName());
+                if (user == null) return NoContent();
+
+                var file = Request.Form.Files[0];
+
+                if (file.Length > 0)
+                {
+                    util.DeleteImage(user.ImagemURL, destino);
+                    user.ImagemURL = await util.SaveImage(file, destino);
+                }
+
+                var userRetorno = await accountService.UpdateAccount(user);
+
+                return Ok(userRetorno);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status400BadRequest, $"Erro ao tentar alterar imagem. Erro: {ex.Message}");
             }
         }
     }

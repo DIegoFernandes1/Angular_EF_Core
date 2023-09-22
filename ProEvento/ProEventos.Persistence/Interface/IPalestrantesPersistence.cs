@@ -1,4 +1,5 @@
 ﻿using ProEventos.Domain.Models;
+using ProEventos.Persistence.Models;
 using System.Threading.Tasks;
 
 namespace ProEventos.Persistence.Interface
@@ -6,8 +7,7 @@ namespace ProEventos.Persistence.Interface
     public interface IPalestrantesPersistence : IGeralPersistence
     {
         //PALESTRANTES
-        Task<Palestrante[]> GetAllPalestrantesByNomeAsync(string nome, bool includeEventos);
-        Task<Palestrante[]> GetAllPalestrantesAsync(bool includeEventos);
-        Task<Palestrante> GetAllPalestranteByIdAsync(int idPalestrante, bool includeEventos);
+        Task<PageList<Palestrante>> GetAllPalestrantesAsync(PageParams pageParams, bool includeEventos = false);
+        Task<Palestrante> GetAllPalestranteByUserIdAsync(int userId, bool includeEventos = false);
     }
 }
