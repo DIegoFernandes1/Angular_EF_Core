@@ -1,12 +1,10 @@
+import { UserUpdate } from "./Identity/UserUpdate";
 import { RedeSocial } from "./RedeSocial"
 
 export interface Palestrante {
   id: number;
-  nome: string;
-  descricao: string;
-  imagemURL: string;
-  telefone: string;
-  email: string;
+  miniCurriculo: string;
+  user: UserUpdate;
   redeSocials: RedeSocial[];
   palestrantesEventos: Palestrante[];
 }

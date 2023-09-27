@@ -15,6 +15,14 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { NavComponent } from './shared/nav/nav.component';
+import { HomeComponent } from './components/home/home.component';
+import { PerfilDetalheComponent } from './components/user/perfil/perfil-detalhe/perfil-detalhe.component';
+import { PalestranteListaComponent } from './components/Palestrantes/palestrante-lista/palestrante-lista.component';
+import { PalestranteDetalheComponent } from './components/Palestrantes/palestrante-detalhe/palestrante-detalhe.component';
+import { RedesSociaisComponent } from './components/redesSociais/redesSociais.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -26,6 +34,7 @@ import { ptBrLocale } from 'ngx-bootstrap/locale';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxCurrencyModule } from "ngx-currency";
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { EventoService } from './services/evento.service';
@@ -33,14 +42,7 @@ import { LoteService } from './services/Lote.service';
 import { AccountService } from './services/account.service';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
-
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
-import { UserComponent } from './components/user/user.component';
-import { LoginComponent } from './components/user/login/login.component';
-import { RegistrationComponent } from './components/user/registration/registration.component';
-import { HomeComponent } from './components/home/home.component';
-
-
 
 defineLocale('pt-br', ptBrLocale);
 
@@ -49,9 +51,12 @@ defineLocale('pt-br', ptBrLocale);
     AppComponent,
       EventosComponent,
       PalestrantesComponent,
+      PalestranteListaComponent,
+      PalestranteDetalheComponent,
       ContatosComponent,
       DashboardComponent,
       PerfilComponent,
+      PerfilDetalheComponent,
       NavComponent,
       DateTimeFormatPipe,
       TituloComponent,
@@ -60,7 +65,8 @@ defineLocale('pt-br', ptBrLocale);
       UserComponent,
       LoginComponent,
       RegistrationComponent,
-      HomeComponent
+      HomeComponent,
+      RedesSociaisComponent,
    ],
   imports: [
     BrowserModule,
@@ -83,6 +89,7 @@ defineLocale('pt-br', ptBrLocale);
     NgxSpinnerModule,
     BsDatepickerModule.forRoot(),
     PaginationModule.forRoot(),
+    TabsModule.forRoot(),
   ],
   providers: [
     EventoService,

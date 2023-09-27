@@ -7,6 +7,7 @@ export const environment = {
   apiURL: 'https:localhost:5001/api/',
   ApiURLResources: 'https:localhost:5001/',
   resourcesAPI: 'resources/images/',
+  ImagemPerfil: 'resources/Perfil/',
   imagemDefaultURL: 'assets/imagens/upload-icon.webp'
 };
 
